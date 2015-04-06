@@ -1,0 +1,61 @@
+Simple Task package to be used over alanning:roles
+
+Roles do almost all you want, but they describe actions:
+- read user collection
+- add products record
+- remove products record
+- access banking information
+
+that is great for clear templating code, but it's a bit tricky to combine
+with business logic like:
+- shop manager
+- reviewer
+- client
+
+that's where Tasks come into Play, it allows to define, on the server only,
+'tasks mappings for alanning:roles'.
+
+* API
+the public API is made to mimic alanning:roles so that you don't get any
+weird surprises.
+
+** addUsersToTasks: function (users, tasks)
+takes in arrays of =users= and =tasks= names
+
+** createTask: function (name, roles)
+creates new task named =name= with roles =roles=
+
+** createTasks: function (options) 
+create tasks taking an object as argument, tasks will be created with the
+keys, roles taken from the values:
+
+#+BEGIN_SRC javascript
+        Tasks.createTasks({
+                testtask0: 'testrole0',
+                testtask1: ['testrole10', 'testrole11'],
+                testtask2: ['testrole20', 'testrole21', 'testrole22']
+        })
+#+END_SRC
+
+** deleteTask: function (name)
+remove task =name=
+
+** getAllTasks: function ([query])
+returns a cursor to the Tasks collection.
+takes an optional query parameter
+
+
+
+** getTasksForUser: function (userId)
+returns the task for the current user, the gramar is wrong, but I didn't
+want to diverge from getRolesForUser from alanning:roles.
+
+** getUsersInTask: function (name)
+return a cursor to a all users with task =name=
+
+** removeUsersFromTasks: function (users, tasks)
+removes users =users= from tasks =tasks=
+
+** Unimplemented functions
++ getGroupsForUser
++ setUserTasks
